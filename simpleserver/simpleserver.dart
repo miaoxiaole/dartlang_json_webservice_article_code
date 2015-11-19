@@ -14,7 +14,7 @@ final PORT = 8080;
 final DATA_FILE = "data.json";
 
 void main() {
-  HttpServer.bind(HOST, PORT).then((server) {
+  HttpServer.bind(HOST, PORT).then((server) {    //这个server系统怎么识别他是什么类型的参数呢？后面的request还有自己的类型，server就没有了
     server.listen((HttpRequest request) {
       switch (request.method) {
         case "GET": 
@@ -46,7 +46,7 @@ void handleGet(HttpRequest req) {
   addCorsHeaders(res);
   
   var file = new File(DATA_FILE);
-  if (file.existsSync()) {
+  if (file.existsSync()) {      // existsSync表示询问这个file在他系统的实体中是否存在
     res.headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
     file.readAsBytes().asStream().pipe(res); // automatically close output stream
   }
@@ -106,7 +106,7 @@ void defaultHandler(HttpRequest req) {
   HttpResponse res = req.response;
   addCorsHeaders(res);
   res.statusCode = HttpStatus.NOT_FOUND;
-  res.addString("Not found: ${req.method}, ${req.uri.path}");
+  //res.addString("Not found: ${req.method}, ${req.uri.path}");
   res.close();
 }
 
